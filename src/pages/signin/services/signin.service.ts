@@ -12,6 +12,10 @@ export class SigninService {
     private readonly signInRepository: Repository<SignInEntity>,
   ) {}
 
+  getImg() {
+    return this.signInRepository.find();
+  }
+
   uploadImage(fileName: string): Observable<SignInPage> {
     const payload: SignInPage = {
       imagePath: fileName,

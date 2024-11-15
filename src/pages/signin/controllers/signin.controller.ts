@@ -1,5 +1,7 @@
 import {
+  BadRequestException,
   Controller,
+  Get,
   NotFoundException,
   Post,
   Request,
@@ -15,6 +17,13 @@ import { saveImgToStorage } from '../helper/image-storage';
 @Controller('signin')
 export class SigninController {
   constructor(private signInService: SigninService) {}
+
+  @Get('img')
+  getImg() {
+    return this.signInService.getImg().catch(() => {
+      throw new BadRequestException('Something Wrong');
+    });
+  }
 
   @UseGuards(JwtGuard)
   @Post('upload')
