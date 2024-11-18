@@ -1,0 +1,83 @@
+[33mcommit e08f019332a3027e4d6cd496e087b1b5ceec1193[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Sun Nov 17 06:16:48 2024 +0700
+
+    feat: fix getImg for signup page
+
+[33mcommit 7e813170b880b788b949c357711c1f99726f03ae[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Sun Nov 17 06:14:26 2024 +0700
+
+    feat: fix getImg for signin page
+
+[33mcommit 67ad72072f7f221388f06306a44125bf14204a3f[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Sun Nov 17 05:40:21 2024 +0700
+
+    feat: fix user signin
+
+[33mcommit 0d9b3fce5c2b2c696f4560d1875b8eaa104389be[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Sat Nov 16 22:33:10 2024 +0700
+
+    feat: add get img for sign up page
+
+[33mcommit 49a43eea0d0ca3926f2774b1b68771404d4b926d[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Sat Nov 16 22:26:51 2024 +0700
+
+    feat: add upload image for signup page
+
+[33mcommit f7873c1e778b0a1f87032d2fcd298687be3c2c90[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Sat Nov 16 22:13:55 2024 +0700
+
+    feat: add signup entity
+
+[33mcommit fe68caa76814cbac0d012f165b923a1c72c3ed19[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Fri Nov 15 20:40:41 2024 +0700
+
+    feat: add get img for signin page
+
+[33mcommit e34a45db39cf5a217e50d2e4b921c102a9c7a241[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Fri Nov 15 20:32:41 2024 +0700
+
+    feat: add img for signin page
+
+[33mcommit 00c8e4f5b4fed52f95157d1a71a6f8309174cadd[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Fri Nov 15 19:34:01 2024 +0700
+
+    setting token
+
+[33mcommit 1dfe66f0d546406d1ceaf061341ad6b3feb62df8[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Tue Nov 12 22:43:02 2024 +0700
+
+    feat: add signin as user
+
+[33mcommit 176c0f7d5f7a59dc92f5ef7f64abf9b239523e8d[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Tue Nov 12 17:12:17 2024 +0700
+
+    feat: add register user
+
+[33mcommit bcd1c720fbdda8fe24362b5c2cfaecca1e440a1d[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Tue Nov 12 15:54:27 2024 +0700
+
+    feat: add user entity
+
+[33mcommit 378e79b23aa2f87b9e55410fcc4f3504ee7dc3e7[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Tue Nov 12 15:43:41 2024 +0700
+
+    setting DB connection
+
+[33mcommit 3bf67e2ee749b5c534d11c1aaca44b3db42f3c7e[m
+Author: Teto-Novala <tetocoding@gmail.com>
+Date:   Tue Nov 12 15:29:11 2024 +0700
+
+    first commit
