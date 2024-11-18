@@ -63,12 +63,14 @@ export class AuthService {
     );
   }
 
-  signIn(data: SignIn): Observable<string> {
+  signIn(data: SignIn): Observable<{ user: User; token: string }> {
     const { email, password } = data;
     return this.validateUser(email, password).pipe(
       switchMap((user: User) => {
         if (user) {
-          return from(this.jwtService.signAsync({ user }));
+          return from(this.jwtService.signAsync({ user })).pipe(
+            map((token: string) => ({ user, token })),
+          );
         }
       }),
     );
