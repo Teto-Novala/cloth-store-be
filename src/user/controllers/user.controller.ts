@@ -8,6 +8,7 @@ import {
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.dto';
 import { Observable } from 'rxjs';
+import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Controller('user')
 export class UserController {
@@ -19,7 +20,7 @@ export class UserController {
     }),
   )
   @Post('register')
-  register(@Body(new ValidationPipe()) user: User): Observable<User> {
+  register(@Body() user: User): Observable<User> {
     return this.userService.registerUser(user);
   }
 }

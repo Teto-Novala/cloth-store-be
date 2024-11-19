@@ -2,9 +2,10 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../models/user.entitity';
 import { Repository } from 'typeorm';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { catchError, from, map, Observable, switchMap } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { User } from '../models/user.dto';
+import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Injectable()
 export class UserService {
@@ -34,6 +35,19 @@ export class UserService {
             map((user: User) => {
               delete user.password;
               return user;
+            }),
+            catchError((error) => {
+              if (error.code === '23505') {
+                const { detail } = error;
+                if (detail.includes('phone')) {
+                  throw new BadRequestException('Nomor sudah ada');
+                }
+                if (detail.includes('email')) {
+                  throw new BadRequestException('Email sudah ada');
+                }
+              }
+
+              throw error;
             }),
           );
         }),

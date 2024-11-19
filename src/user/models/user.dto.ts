@@ -21,7 +21,7 @@ export class User {
   email: string;
 
   // @IsNotEmpty({ message: 'Nomor Hp tidak boleh kosong!' })
-  @MinLength(11, { message: 'Nomor angka tidak cukup' })
+  @MinLength(13, { message: 'Nomor angka tidak cukup' })
   @IsMobilePhone(
     'id-ID',
     { strictMode: true },
