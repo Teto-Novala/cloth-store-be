@@ -12,6 +12,12 @@ import { Observable } from 'rxjs';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @UsePipes(
+    new ValidationPipe({
+      stopAtFirstError: true,
+    }),
+  )
   @Post('register')
   register(@Body(new ValidationPipe()) user: User): Observable<User> {
     return this.userService.registerUser(user);
