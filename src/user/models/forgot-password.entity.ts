@@ -16,7 +16,7 @@ export class ForgotEntity {
 
   @OneToOne(() => UserEntity)
   @JoinColumn()
-  userId: UserEntity;
+  user: UserEntity;
 
   @Column()
   confirmationCode: string;

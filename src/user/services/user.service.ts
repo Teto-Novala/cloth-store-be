@@ -70,13 +70,17 @@ export class UserService {
 
   findByEmail(email: string): Observable<User> {
     return from(
-      this.userRepository
-        .findOne({
-          where: { email },
-        })
-        .catch(() => {
-          throw new NotFoundException('Email tidak ditemukan');
-        }),
+      this.userRepository.findOne({
+        where: { email },
+      }),
+    ).pipe(
+      map((user: User) => {
+        if (user) {
+          return user;
+        } else {
+          throw new NotFoundException('User Tidak ditemukan');
+        }
+      }),
     );
   }
 
@@ -111,11 +115,12 @@ export class UserService {
           if (lastname !== user.lastname) {
             throw new NotFoundException('Lastname tidak ditemukan');
           }
+
           return of(this.setConfirmationCode(6)).pipe(
             switchMap((code: string) => {
               return from(
                 this.forgotRepository.save({
-                  userId: user,
+                  user: user,
                   confirmationCode: code,
                 }),
               ).pipe(
@@ -124,6 +129,17 @@ export class UserService {
                     user,
                     confirmationCode: code,
                   };
+                }),
+                catchError((error) => {
+                  if (error.code === '23505') {
+                    const { detail } = error;
+                    if (detail.includes('userId')) {
+                      throw new BadRequestException(
+                        'Konfirmasi Kode sudah dibuat',
+                      );
+                    }
+                  }
+                  throw error;
                 }),
               );
             }),
