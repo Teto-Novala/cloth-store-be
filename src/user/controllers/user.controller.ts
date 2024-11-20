@@ -28,7 +28,7 @@ export class UserController {
   @Post('forgot')
   forgotPassword(
     @Body() forgot: Forgot,
-  ): Observable<{ user: User; confirmation: string }> {
+  ): Observable<{ user: User; confirmationCode: string }> {
     return this.userService.forgotPassword(forgot);
   }
 }

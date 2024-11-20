@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ROLE } from './role.enum';
+import { ForgotEntity } from './forgot-password.entity';
 
 @Entity('user')
 export class UserEntity {

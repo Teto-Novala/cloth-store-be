@@ -11,12 +11,15 @@ import * as bcrypt from 'bcrypt';
 import { User } from '../models/user.dto';
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 import { Forgot } from '../models/forgot.dto';
+import { ForgotEntity } from '../models/forgot-password.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(ForgotEntity)
+    private readonly forgotRepository: Repository<ForgotEntity>,
   ) {}
 
   hashPassword(password: string): Observable<string> {
@@ -94,7 +97,7 @@ export class UserService {
 
   forgotPassword(
     data: Forgot,
-  ): Observable<{ user: User; confirmation: string }> {
+  ): Observable<{ user: User; confirmationCode: string }> {
     try {
       const { email, firstname, lastname, phone } = data;
       return this.findByEmail(email).pipe(
@@ -109,11 +112,20 @@ export class UserService {
             throw new NotFoundException('Lastname tidak ditemukan');
           }
           return of(this.setConfirmationCode(6)).pipe(
-            map((code: string) => {
-              return {
-                user,
-                confirmation: code,
-              };
+            switchMap((code: string) => {
+              return from(
+                this.forgotRepository.save({
+                  userId: user,
+                  confirmationCode: code,
+                }),
+              ).pipe(
+                map(() => {
+                  return {
+                    user,
+                    confirmationCode: code,
+                  };
+                }),
+              );
             }),
           );
         }),
