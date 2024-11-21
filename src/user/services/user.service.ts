@@ -6,12 +6,14 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../models/user.entitity';
 import { Repository } from 'typeorm';
-import { catchError, from, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, from, map, mapTo, Observable, of, switchMap } from 'rxjs';
 import * as bcrypt from 'bcrypt';
 import { User } from '../models/user.dto';
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 import { Forgot } from '../models/forgot.dto';
 import { ForgotEntity } from '../models/forgot-password.entity';
+import { Confirm } from '../models/confirm.dto';
+import { ForgotPassword } from '../models/forgot-pw.dto';
 
 @Injectable()
 export class UserService {
@@ -101,7 +103,7 @@ export class UserService {
 
   forgotPassword(
     data: Forgot,
-  ): Observable<{ user: User; confirmationCode: string }> {
+  ): Observable<{ id: string; confirmationCode: string }> {
     try {
       const { email, firstname, lastname, phone } = data;
       return this.findByEmail(email).pipe(
@@ -124,9 +126,9 @@ export class UserService {
                   confirmationCode: code,
                 }),
               ).pipe(
-                map(() => {
+                map((forgot: ForgotPassword) => {
                   return {
-                    user,
+                    id: forgot.id,
                     confirmationCode: code,
                   };
                 }),
@@ -149,5 +151,30 @@ export class UserService {
     } catch (error) {
       throw new BadRequestException('Something bad happen');
     }
+  }
+
+  confirmationCode(data: Confirm): Observable<{ message: string }> {
+    const { confirmationCode, id } = data;
+    return from(
+      this.forgotRepository.findOne({
+        where: { id },
+      }),
+    ).pipe(
+      map((forgot: ForgotPassword) => {
+        if (forgot) {
+          if (confirmationCode === forgot.confirmationCode) {
+            this.forgotRepository.delete(forgot.id);
+            return {
+              message: 'Berhasil konfirmasi',
+            };
+          }
+          if (confirmationCode !== forgot.confirmationCode) {
+            throw new BadRequestException('Kode Konfirmasi Salah');
+          }
+        } else {
+          throw new NotFoundException('User tidak ditemukan');
+        }
+      }),
+    );
   }
 }

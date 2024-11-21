@@ -10,6 +10,7 @@ import { User } from '../models/user.dto';
 import { Observable } from 'rxjs';
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 import { Forgot } from '../models/forgot.dto';
+import { Confirm } from '../models/confirm.dto';
 
 @Controller('user')
 export class UserController {
@@ -28,7 +29,12 @@ export class UserController {
   @Post('forgot')
   forgotPassword(
     @Body() forgot: Forgot,
-  ): Observable<{ user: User; confirmationCode: string }> {
+  ): Observable<{ id: string; confirmationCode: string }> {
     return this.userService.forgotPassword(forgot);
+  }
+
+  @Post('confirm')
+  confirmationCode(@Body() confirm: Confirm): Observable<{ message: string }> {
+    return this.userService.confirmationCode(confirm);
   }
 }

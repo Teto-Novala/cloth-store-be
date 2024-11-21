@@ -22,5 +22,5 @@ export class ForgotEntity {
   confirmationCode: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt?: Date;
 }
